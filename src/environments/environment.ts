@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  //apiBaseUrl: "http://express:3000/api"
-  apiBaseUrl: "http://localhost:3000/api"
+  jsonUrl: "assets/wikipedia_marvel_data.json"
 };
 
 /*
