@@ -1,59 +1,70 @@
 
 <mat-card class="component-card">
   <h4>List of Heroes</h4>
-  <ng-container *ngIf="{ data: heroes$ | async } as heroesList">
-    <table mat-table [dataSource]="heroesList.data ? heroesList.data : []">
+  <!--<ng-container *ngIf="dataSource.data as heroesList">-->
+    <table mat-table [dataSource]="dataSource" matSort matSortStart="desc">
       <ng-container matColumnDef="nameLabel">
-        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
         <mat-cell *matCellDef="let hero">{{ hero.nameLabel }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="genderLabel">
-        <mat-header-cell *matHeaderCellDef>Gender</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Gender</mat-header-cell>
         <mat-cell class="description-cell" *matCellDef="let hero">{{
-          hero.genderLabel
+          hero.genderLabel | titlecase
         }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="citizenshipLabel">
-        <mat-header-cell *matHeaderCellDef>Citizenship</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Citizenship</mat-header-cell>
         <mat-cell class="duration-cell" *matCellDef="let hero">{{
           hero.citizenshipLabel
         }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="skillsLabel">
-        <mat-header-cell *matHeaderCellDef>Skills</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Skills</mat-header-cell>
         <mat-cell class="duration-cell" *matCellDef="let hero">{{
-          hero.skillsLabel
+          hero.skillsLabel | titlecase
         }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="occupationLabel">
-        <mat-header-cell *matHeaderCellDef>Occupation</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Occupation</mat-header-cell>
         <mat-cell class="duration-cell" *matCellDef="let hero">{{
-          hero.occupationLabel
+          hero.occupationLabel | titlecase
         }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="memberOfLabel">
-        <mat-header-cell *matHeaderCellDef>Member</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Member</mat-header-cell>
         <mat-cell class="duration-cell" *matCellDef="let hero">{{
           hero.memberOfLabel
         }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="creatorLabel">
-        <mat-header-cell *matHeaderCellDef>Creator</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Creator</mat-header-cell>
         <mat-cell class="duration-cell" *matCellDef="let hero">{{
           hero.creatorLabel
         }}</mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+      <ng-container matColumnDef="update">
+        <mat-header-cell *matHeaderCellDef>Update</mat-header-cell>
         <mat-cell class="duration-cell" *matCellDef="let hero">
-          <button (click)="onRemove(hero)" md-raised-button>Delete</button>
+          <button mat-icon-button color="accent" (click)="onUpdate(hero)">
+            <mat-icon class="mat-18">system_update</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
+        <mat-cell class="duration-cell" *matCellDef="let hero">
+          <button mat-icon-button color="warn" (click)="onDelete(hero)">
+            <mat-icon class="mat-18">delete</mat-icon>
+          </button>
         </mat-cell>
       </ng-container>
 
@@ -64,13 +75,13 @@
       ></mat-row>
     </table>
 
-    <table>
-      <tr *ngIf="!heroesList.data || heroesList.data.length === 0">
+    <!--<table>
+      <tr *ngIf="!heroesList || heroesList.length === 0">
         <td style="text-align: center" [attr.colspan]="displayedColumns.length">
           No Records Found!
         </td>
       </tr>
     </table>
-  </ng-container>
+  </ng-container>-->
 </mat-card>
 
