@@ -1,0 +1,76 @@
+
+<mat-card class="component-card">
+  <h4>List of Heroes</h4>
+  <ng-container *ngIf="{ data: heroes$ | async } as heroesList">
+    <table mat-table [dataSource]="heroesList.data ? heroesList.data : []">
+      <ng-container matColumnDef="nameLabel">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let hero">{{ hero.nameLabel }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="genderLabel">
+        <mat-header-cell *matHeaderCellDef>Gender</mat-header-cell>
+        <mat-cell class="description-cell" *matCellDef="let hero">{{
+          hero.genderLabel
+        }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="citizenshipLabel">
+        <mat-header-cell *matHeaderCellDef>Citizenship</mat-header-cell>
+        <mat-cell class="duration-cell" *matCellDef="let hero">{{
+          hero.citizenshipLabel
+        }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="skillsLabel">
+        <mat-header-cell *matHeaderCellDef>Skills</mat-header-cell>
+        <mat-cell class="duration-cell" *matCellDef="let hero">{{
+          hero.skillsLabel
+        }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="occupationLabel">
+        <mat-header-cell *matHeaderCellDef>Occupation</mat-header-cell>
+        <mat-cell class="duration-cell" *matCellDef="let hero">{{
+          hero.occupationLabel
+        }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="memberOfLabel">
+        <mat-header-cell *matHeaderCellDef>Member</mat-header-cell>
+        <mat-cell class="duration-cell" *matCellDef="let hero">{{
+          hero.memberOfLabel
+        }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="creatorLabel">
+        <mat-header-cell *matHeaderCellDef>Creator</mat-header-cell>
+        <mat-cell class="duration-cell" *matCellDef="let hero">{{
+          hero.creatorLabel
+        }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell class="duration-cell" *matCellDef="let hero">
+          <button (click)="onRemove(hero)" md-raised-button>Delete</button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="onSelect(row)"
+      ></mat-row>
+    </table>
+
+    <table>
+      <tr *ngIf="!heroesList.data || heroesList.data.length === 0">
+        <td style="text-align: center" [attr.colspan]="displayedColumns.length">
+          No Records Found!
+        </td>
+      </tr>
+    </table>
+  </ng-container>
+</mat-card>
+
