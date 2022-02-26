@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Hero detail</h2>
+
+<mat-dialog-content [formGroup]="form" fxLayout="column">
+
+    <mat-form-field>
+        <input matInput placeholder="Name" formControlName="nameLabel">
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Gender" formControlName="genderLabel">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Citizenship" formControlName="citizenshipLabel">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Skills" formControlName="skillsLabel">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Occupation" formControlName="occupationLabel">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Member" formControlName="memberOfLabel">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Creator" formControlName="creatorLabel">
+    </mat-form-field>
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button"(click)="onClose()">Close</button>
+</mat-dialog-actions>
