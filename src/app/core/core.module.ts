@@ -13,8 +13,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
   ],
   declarations: [],
   exports: [
-    ToastrModule,
-    LayoutModule
+    ToastrModule
   ],
   providers: [
     ToastrService,

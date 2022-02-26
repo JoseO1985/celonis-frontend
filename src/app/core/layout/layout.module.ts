@@ -4,11 +4,12 @@ import { HeaderComponent } from './header/header.component';
 import { LayoutComponent } from './layout.component';
 import { MaterialModule } from 'src/app/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
   declarations: [LayoutComponent, HeaderComponent],
-  imports: [CommonModule, MaterialModule, FlexLayoutModule],
+  imports: [RouterModule, CommonModule, MaterialModule, FlexLayoutModule],
   exports: [LayoutComponent, HeaderComponent],
   providers: []
 })
