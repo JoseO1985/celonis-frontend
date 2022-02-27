@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HeroModalDetailComponent } from './hero-modal-detail.component';
+import { ModalFormComponent } from './modal-form.component';
 
-describe('HeroModalDetailComponent', () => {
-  let component: HeroModalDetailComponent;
-  let fixture: ComponentFixture<HeroModalDetailComponent>;
+describe('ModalFormComponent', () => {
+  let component: ModalFormComponent;
+  let fixture: ComponentFixture<ModalFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HeroModalDetailComponent ]
+      declarations: [ ModalFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HeroModalDetailComponent);
+    fixture = TestBed.createComponent(ModalFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

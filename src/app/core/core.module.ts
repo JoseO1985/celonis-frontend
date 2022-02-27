@@ -3,6 +3,8 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { LayoutModule } from "./layout/layout.module";
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ModalModule } from './modal/modal.module';
+import { throwIfAlreadyLoaded } from './module-import-guard';
 
 @NgModule({
   imports: [
@@ -13,18 +15,15 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
   ],
   declarations: [],
   exports: [
-    ToastrModule
-  ],
+    ToastrModule,
+    ModalModule
+    ],
   providers: [
     ToastrService,
   ]
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
-    if (parentModule) {
-      throw new Error(
-        'CoreModule is already loaded. Import it in the AppModule only'
-      );
-    }
+    throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 }

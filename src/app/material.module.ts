@@ -14,6 +14,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 const materialModules = [
@@ -31,7 +32,8 @@ const materialModules = [
   MatMenuModule,
   MatChipsModule,
   MatSortModule,
-  MatDialogModule
+  MatDialogModule,
+  MatAutocompleteModule
 ];
 
 @NgModule({
