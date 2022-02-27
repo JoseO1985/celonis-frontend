@@ -34,7 +34,7 @@ export class HeroesListComponent implements OnInit, OnDestroy {
   }
 
   getAllHeroes() {
-    this.subscription = this.heroesService.getAll().subscribe(data => {
+    this.subscription = this.heroesService.getHeroes().subscribe(data => {
       this.dataSource.data = data;
       this.allItems = data.map(elem => elem.nameLabel);
     });
@@ -47,6 +47,16 @@ export class HeroesListComponent implements OnInit, OnDestroy {
   onSelect(hero: Hero) {
     this.selectedHero = hero;
     this.openDialog();
+  }
+
+  onFilterList(name: string) {
+    const filteredtems = this.heroesService.filter(name);
+    this.dataSource.data = filteredtems;
+  }
+
+  onRemoveItem(name: string) {
+    const filteredtems = this.heroesService.remove(name);
+    this.dataSource.data = filteredtems;
   }
 
   onDelete($event: any) {

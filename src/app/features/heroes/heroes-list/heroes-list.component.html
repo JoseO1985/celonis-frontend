@@ -1,5 +1,10 @@
 
-<app-chip-autocomplete [allItems]="allItems" *ngIf="allItems && allItems.length > 0"></app-chip-autocomplete>
+<app-chip-autocomplete
+  [allItems]="allItems"
+  (onFilter)="onFilterList($event)"
+  (onRemove)="onRemoveItem($event)"
+  *ngIf="allItems && allItems.length > 0">
+</app-chip-autocomplete>
 
 <mat-card class="component-card">
   <h4>List of Heroes</h4>

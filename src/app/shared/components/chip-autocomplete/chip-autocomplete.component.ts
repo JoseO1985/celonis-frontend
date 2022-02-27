@@ -1,8 +1,7 @@
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
 import { map, Observable, of, startWith } from 'rxjs';
 
 @Component({
@@ -14,34 +13,19 @@ export class ChipAutocompleteComponent implements OnInit {
 
   itemCtrl = new FormControl();
   filteredItems: Observable<string[]> = of([]);
-  @Input() allItems: string[] = [];
   items: string[] = [];
+
+  @Input() allItems: string[] = [];
+  @Output() onFilter: EventEmitter<string> = new EventEmitter();
+  @Output() onRemove: EventEmitter<string> = new EventEmitter();
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+
   @ViewChild('itemInput') itemInput!: ElementRef<HTMLInputElement>;
 
   constructor() { }
 
   ngOnInit(): void {
     this.watchFilter();
-  }
-
-  addChip(event: MatChipInputEvent): void {
-    const input = event.input;
-    const value = event.value;
-
-    if ((value || "").trim()) {
-      const filterList = this.getUniqueList(this.allItems);
-      const index = filterList.indexOf(event.value);
-      if (index > -1) {
-        this.items.push(event.value);
-      }
-    }
-
-    if (input) {
-      input.value = "";
-    }
-
-    this.itemCtrl.setValue(null);
   }
 
   onRemoveChip(item: string) {
@@ -51,10 +35,12 @@ export class ChipAutocompleteComponent implements OnInit {
     }
 
     this.itemCtrl.updateValueAndValidity();
+    this.onRemove.emit(item);
   }
 
   onSelectAutocomplete($event: MatAutocompleteSelectedEvent): void {
     this.items.push($event.option.viewValue);
+    this.onFilter.emit($event.option.viewValue)
     this.itemInput.nativeElement.value = '';
     this.itemCtrl.setValue(null);
   }
