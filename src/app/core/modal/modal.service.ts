@@ -11,11 +11,15 @@ export class ModalService {
     private dialog: MatDialog
   ) { }
 
-  openDialog(component: ComponentType<any>, data: any) {
-    const dialogConfig = new MatDialogConfig();
+  openDialog(component: ComponentType<any>, data?: any) {
+    let dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.data = data;
-    this.dialog.open(component, dialogConfig);
+    if (data)
+      dialogConfig = {
+        ...dialogConfig,
+        ...data
+      }
+    return this.dialog.open(component, dialogConfig);
 }
 }
