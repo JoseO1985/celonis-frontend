@@ -1,10 +1,15 @@
 
-<app-chip-autocomplete
-  [allItems]="allItems"
-  (onFilter)="onFilterList($event)"
-  (onRemove)="onRemoveItem($event)"
-  *ngIf="allItems && allItems.length > 0">
-</app-chip-autocomplete>
+<section fxLayout="row" fxLayoutAlign="space-between center">
+  <app-chip-autocomplete
+    [allItems]="allItems"
+    (onFilter)="onFilterList($event)"
+    (onRemove)="onRemoveItem($event)"
+    *ngIf="allItems && allItems.length > 0">
+  </app-chip-autocomplete>
+  <div class="actions">
+    <button class="mat-raised-button"(click)="onAddHero()">Create Hero</button>
+  </div>
+</section>
 
 <mat-card class="component-card">
   <h4>List of Heroes</h4>

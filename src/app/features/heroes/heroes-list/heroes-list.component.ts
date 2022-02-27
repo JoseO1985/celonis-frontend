@@ -3,6 +3,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { ModalFormComponent, ModalService } from '../../../core';
+import { HeroAddComponent } from '../hero-add/hero-add.component';
 import { Hero } from '../models/hero.model';
 import { HeroesService } from '../services/heroes.service';
 
@@ -16,7 +17,7 @@ export class HeroesListComponent implements OnInit, OnDestroy {
   public dataSource = new MatTableDataSource<Hero>();
   @ViewChild(MatSort) sort!: MatSort;
   selectedHero!: Hero;
-  subscription!: Subscription;
+  subscriptions: Subscription[] = [];
   allItems: string[] = [];
 
   constructor(
@@ -34,19 +35,23 @@ export class HeroesListComponent implements OnInit, OnDestroy {
   }
 
   getAllHeroes() {
-    this.subscription = this.heroesService.getHeroes().subscribe(data => {
+    this.subscriptions.push(this.heroesService.getHeroes().subscribe(data => {
       this.dataSource.data = data;
       this.allItems = data.map(elem => elem.nameLabel);
-    });
+    }));
   }
 
-  openDialog() {
-    this.modalService.openDialog(ModalFormComponent, this.selectedHero);
+  openHeroDetailDialog() {
+    this.modalService.openDialog(ModalFormComponent, {
+      data: this.selectedHero,
+      height: '400px',
+      width: '600px',
+    });
   }
 
   onSelect(hero: Hero) {
     this.selectedHero = hero;
-    this.openDialog();
+    this.openHeroDetailDialog();
   }
 
   onFilterList(name: string) {
@@ -59,6 +64,18 @@ export class HeroesListComponent implements OnInit, OnDestroy {
     this.dataSource.data = filteredtems;
   }
 
+  onAddHero() {
+    const dialogRef = this.modalService.openDialog(HeroAddComponent,
+    {
+      height: '400px',
+      width: '600px',
+    });
+
+    this.subscriptions.push(dialogRef.afterClosed().subscribe(returnedData => {
+      this.heroesService.add(returnedData);
+    }));
+  }
+
   onDelete($event: any) {
 
   }
@@ -68,6 +85,6 @@ export class HeroesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

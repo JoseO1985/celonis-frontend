@@ -1,0 +1,56 @@
+<h2 mat-dialog-title>Create new Hero</h2>
+
+<mat-dialog-content [formGroup]="form" fxLayout="column" fxLayoutGap="20px">
+
+    <mat-form-field>
+        <input matInput placeholder="Name" formControlName="nameLabel">
+        <mat-error *ngIf="form.controls['nameLabel'].touched && form.controls['nameLabel'].errors &&
+           form.controls['nameLabel'].errors['required']">Required Field</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill">
+      <mat-label>Choose the gender</mat-label>
+      <mat-select  formControlName="genderLabel">
+        <mat-option value="female">{{ Gender.female }}</mat-option>
+        <mat-option value="male">{{ Gender.male }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls['genderLabel'].touched && form.controls['genderLabel'].errors &&
+      form.controls['genderLabel'].errors['required']">Required Field</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Citizenship" formControlName="citizenshipLabel">
+        <mat-error *ngIf="form.controls['citizenshipLabel'].touched && form.controls['citizenshipLabel'].errors &&
+           form.controls['citizenshipLabel'].errors['required']">Required Field</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Skills" formControlName="skillsLabel">
+        <mat-error *ngIf="form.controls['skillsLabel'].touched && form.controls['skillsLabel'].errors &&
+           form.controls['skillsLabel'].errors['required']">Required Field</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Occupation" formControlName="occupationLabel">
+        <mat-error *ngIf="form.controls['occupationLabel'].touched && form.controls['occupationLabel'].errors &&
+           form.controls['occupationLabel'].errors['required']">Required Field</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Member" formControlName="memberOfLabel">
+        <mat-error *ngIf="form.controls['memberOfLabel'].touched && form.controls['memberOfLabel'].errors &&
+           form.controls['memberOfLabel'].errors['required']">Required Field</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Creator" formControlName="creatorLabel">
+        <mat-error *ngIf="form.controls['creatorLabel'].touched && form.controls['creatorLabel'].errors &&
+           form.controls['creatorLabel'].errors['required']">Required Field</mat-error>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between">
+    <button class="mat-raised-button"(click)="onCreate()">Create</button>
+    <button class="mat-raised-button"(click)="onClose()">Close</button>
+</mat-dialog-actions>

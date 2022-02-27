@@ -46,6 +46,11 @@ export class HeroesService {
     return this.filters.length === 0;
   }
 
+  add(hero: Hero) {
+    this.heroes.unshift(hero);
+    this.heroes$.next(this.heroes);
+  }
+
   remove(value: string) {
     const removeValue = value.toLowerCase();
     this.filters = this.filters.filter(filter => filter !== removeValue);

@@ -15,6 +15,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
 
 
 const materialModules = [
@@ -33,7 +34,8 @@ const materialModules = [
   MatChipsModule,
   MatSortModule,
   MatDialogModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatSelectModule
 ];
 
 @NgModule({

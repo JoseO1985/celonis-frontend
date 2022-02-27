@@ -5,12 +5,14 @@ import { HeroesRoutingModule } from './heroes-routing.module';
 import { HeroesComponent } from './heroes.component';
 import { SharedModule } from '../../shared/shared.module';
 import { HeroesListComponent } from './heroes-list/heroes-list.component';
+import { HeroAddComponent } from './hero-add/hero-add.component';
 
 
 @NgModule({
   declarations: [
     HeroesComponent,
-    HeroesListComponent
+    HeroesListComponent,
+    HeroAddComponent
   ],
   imports: [
     CommonModule,
