@@ -1,12 +1,15 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
-import { HeroModalDetailComponent } from '../components/hero-modal-detail/hero-modal-detail.component';
+import { map, Observable, of, startWith, Subscription } from 'rxjs';
 import { Hero } from '../models/hero.model';
 import { HeroesService } from '../services/heroes.service';
-
+import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { MatChipInputEvent } from '@angular/material/chips';
+import { FormControl } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { ModalDetailComponent } from '../components/modal-detail/modal-detail.component';
 
 @Component({
   selector: 'app-heroes-list',
@@ -19,11 +22,13 @@ export class HeroesListComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort!: MatSort;
   selectedHero!: Hero;
   subscription!: Subscription;
+  allItems: string[] = [];
 
   constructor(
     private heroesService: HeroesService,
     private dialog: MatDialog
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.getAllHeroes();
@@ -34,7 +39,10 @@ export class HeroesListComponent implements OnInit, OnDestroy {
   }
 
   getAllHeroes() {
-    this.subscription = this.heroesService.getAll().subscribe(data => this.dataSource.data = data)
+    this.subscription = this.heroesService.getAll().subscribe(data => {
+      this.dataSource.data = data;
+      this.allItems = data.map(elem => elem.nameLabel);
+    });
   }
 
   openDialog() {
@@ -42,7 +50,7 @@ export class HeroesListComponent implements OnInit, OnDestroy {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = this.selectedHero;
-    this.dialog.open(HeroModalDetailComponent, dialogConfig);
+    this.dialog.open(ModalDetailComponent, dialogConfig);
 }
 
   onSelect(hero: Hero) {
@@ -59,7 +67,6 @@ export class HeroesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
-
 }

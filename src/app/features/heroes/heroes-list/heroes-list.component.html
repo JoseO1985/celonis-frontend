@@ -1,7 +1,8 @@
 
+<app-chip-autocomplete [allItems]="allItems" *ngIf="allItems && allItems.length > 0"></app-chip-autocomplete>
+
 <mat-card class="component-card">
   <h4>List of Heroes</h4>
-  <!--<ng-container *ngIf="dataSource.data as heroesList">-->
     <table mat-table [dataSource]="dataSource" matSort matSortStart="desc">
       <ng-container matColumnDef="nameLabel">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
@@ -74,14 +75,5 @@
         (click)="onSelect(row)"
       ></mat-row>
     </table>
-
-    <!--<table>
-      <tr *ngIf="!heroesList || heroesList.length === 0">
-        <td style="text-align: center" [attr.colspan]="displayedColumns.length">
-          No Records Found!
-        </td>
-      </tr>
-    </table>
-  </ng-container>-->
-</mat-card>
+  </mat-card>
 
