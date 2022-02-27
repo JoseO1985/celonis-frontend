@@ -1,6 +1,8 @@
+import { Gender } from './enums/gender';
+
 export interface Hero {
   nameLabel: string,
-  genderLabel: 'male' | 'female',
+  genderLabel: Gender,
   citizenshipLabel: string,
   skillsLabel: string,
   occupationLabel: string,
