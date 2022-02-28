@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, take } from 'rxjs';
-import { LocalStorageService } from 'src/app/core';
+import { LocalStorageService } from '../../../../core';
 import { environment } from '../../../../../environments/environment';
 import { Hero } from '../../models/hero.model';
 
