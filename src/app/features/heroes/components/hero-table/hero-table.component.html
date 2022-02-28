@@ -4,48 +4,60 @@
   [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" aria-label="Select page"></mat-paginator>
 
 <div class="mat-elevation-z8 table-wrapper">
-  <mat-table [dataSource]="dataSource" matSort matSortStart="desc">
-    <ng-container matColumnDef="{{column}}"
-      *ngFor="let column of displayedColumns | slice:0:displayedColumns.length - 2;let i = index">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
-        <div class="custom-header">
-          <p>{{ labelColumns[i] }}</p>
-          <ng-container *ngIf="chartData[column]?.data">
-            <app-bar [domId]="column" [data]="chartData[column].data" *ngIf="chartData[column].type === ChartType.bar"></app-bar>
-            <app-pie [domId]="column" [data]="chartData[column].data" *ngIf="chartData[column].type === ChartType.pie"></app-pie>
-          </ng-container>
-        </div>
-      </mat-header-cell>
-      <mat-cell *matCellDef="let item" (click)="onSelect(item)">{{ item[column] | titlecase }}</mat-cell>
-    </ng-container>
+  <ng-container *ngIf="dataSource.data.length > 0; else emptyTable">
+    <mat-table [dataSource]="dataSource" matSort matSortStart="desc">
+      <ng-container matColumnDef="{{column}}"
+        *ngFor="let column of displayedColumns | slice:0:displayedColumns.length - 2;let i = index">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          <div class="custom-header">
+            <p>{{ labelColumns[i] }}</p>
+            <ng-container *ngIf="chartData && chartData[column]?.data">
+              <app-bar [domId]="column" [data]="chartData[column].data" *ngIf="chartData[column].type === ChartType.bar"></app-bar>
+              <app-pie [domId]="column" [data]="chartData[column].data" *ngIf="chartData[column].type === ChartType.pie"></app-pie>
+            </ng-container>
+          </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item" (click)="onSelect(item)">{{ item[column] | titlecase }}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="update">
-      <mat-header-cell *matHeaderCellDef>
-        <div class="custom-header">
-          <p>Update</p>
-        </div>
-      </mat-header-cell>
-      <mat-cell class="duration-cell" *matCellDef="let item">
-        <button mat-icon-button color="accent" (click)="onUpdate(item)">
-          <mat-icon class="mat-18">system_update</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="update">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="custom-header">
+            <p>Update</p>
+          </div>
+        </mat-header-cell>
+        <mat-cell class="duration-cell" *matCellDef="let item">
+          <button mat-icon-button color="accent" (click)="onUpdate(item)">
+            <mat-icon class="mat-18">system_update</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="delete">
-      <mat-header-cell *matHeaderCellDef>
-        <div class="custom-header">
-          <p>Delete</p>
-        </div>
-      </mat-header-cell>
-      <mat-cell class="duration-cell" *matCellDef="let item">
-        <button mat-icon-button color="warn" (click)="onDelete(item)">
-          <mat-icon class="mat-18">delete</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef>
+          <div class="custom-header">
+            <p>Delete</p>
+          </div>
+        </mat-header-cell>
+        <mat-cell class="duration-cell" *matCellDef="let item">
+          <button mat-icon-button color="warn" (click)="onDelete(item)">
+            <mat-icon class="mat-18">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-  </mat-table>
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </ng-container>
+
+  <ng-template #emptyTable>
+    <table>
+      <tr>
+        <td style="text-align: center" [attr.colspan]="displayedColumns.length">
+          No Records Found!
+        </td>
+      </tr>
+    </table>
+  </ng-template>
 </div>
