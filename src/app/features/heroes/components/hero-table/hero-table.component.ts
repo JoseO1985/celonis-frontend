@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ChartData } from '../../models/chart-data';
@@ -18,11 +19,19 @@ export class HeroTableComponent implements OnInit {
   @Input() title!: string;
   @Input() dataSource = new MatTableDataSource<Hero>();
   @Input() chartData!: ChartData;
+
   @Output() select: EventEmitter<Hero> = new EventEmitter();
   @Output() delete: EventEmitter<Hero> = new EventEmitter();
   @Output() update: EventEmitter<Hero> = new EventEmitter();
 
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  totalItems = 0;
+  totalPages = 0;
+  currentPage = 0;
+  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
 
   ChartType = ChartType;
 
@@ -32,7 +41,16 @@ export class HeroTableComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+    this.initData();
+  }
+
+  initData() {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    setTimeout(() => {
+      this.paginator.pageIndex = this.currentPage;
+      this.paginator.length = this.dataSource.data.length;
+    })
   }
 
   onSelect(hero: Hero) {
@@ -45,6 +63,12 @@ export class HeroTableComponent implements OnInit {
 
   onUpdate(hero: Hero) {
     this.update.emit(hero);
+  }
+
+  async pageChanged(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.initData();
   }
 
 }

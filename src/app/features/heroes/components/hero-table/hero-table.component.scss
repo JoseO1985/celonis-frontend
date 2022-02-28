@@ -1,8 +1,6 @@
-table {
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  min-width: 500px;
+.table-wrapper {
+  height: 80vh;
+  overflow: auto;
 
   .custom-header {
     text-align: left;
@@ -14,7 +12,4 @@ table {
   }
 }
 
-th.mat-header-cell {
-  text-align: left;
-  max-width: 300px;
-}
+
