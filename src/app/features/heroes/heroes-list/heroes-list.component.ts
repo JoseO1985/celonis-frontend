@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { ModalFormComponent, ModalService } from '../../../core';
-import { HeroAddComponent } from '../hero-add/hero-add.component';
+import { HeroAddEditComponent } from '../hero-add-edit/hero-add-edit.component';
 import { ChartData } from '../models/chart-data';
 import { Hero } from '../models/hero.model';
 import { ChartService } from '../services/chart/chart.service';
@@ -64,29 +63,36 @@ export class HeroesListComponent implements OnInit, OnDestroy {
   }
 
   onRemoveItem(name: string) {
-    const filteredtems = this.heroService.remove(name);
+    const filteredtems = this.heroService.removeFilter(name);
     this.dataSource.data = filteredtems;
   }
 
-  onAddHero() {
-    const dialogRef = this.modalService.openDialog(HeroAddComponent,
-      {
-        height: '400px',
-        width: '600px',
-      });
+  onAddEditHero(data?: Hero) {
+    let dialogOptions: {width: string, height: string, data?: Hero} = {
+      height: '400px',
+      width: '600px'
+    };
+
+    const mode = data ? 'edit' : 'add';
+
+    if (data)
+      dialogOptions.data = data;
+
+    const dialogRef = this.modalService.openDialog(HeroAddEditComponent, dialogOptions);
 
     this.subscriptions.push(dialogRef.afterClosed().subscribe(returnedData => {
-      if (returnedData)
-        this.heroService.add(returnedData);
+      if (returnedData) {
+        if (mode === 'add') {
+          this.heroService.add(returnedData);
+          return;
+        }
+        this.heroService.update(returnedData);
+      }
     }));
   }
 
-  onDelete($event: any) {
-    console.log("deleting")
-  }
-
-  onUpdate($event: any) {
-    console.log("updating")
+  onDelete(hero: Hero) {
+    this.heroService.remove(hero);
   }
 
   ngOnDestroy(): void {
