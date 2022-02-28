@@ -4,8 +4,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { ModalFormComponent, ModalService } from '../../../core';
 import { HeroAddComponent } from '../hero-add/hero-add.component';
+import { ChartData } from '../models/chart-data';
 import { Hero } from '../models/hero.model';
-import { HeroesService } from '../services/heroes.service';
+import { ChartService } from '../services/chart/chart.service';
+import { HeroService } from '../services/hero/hero.service';
 
 @Component({
   selector: 'app-heroes-list',
@@ -13,16 +15,21 @@ import { HeroesService } from '../services/heroes.service';
   styleUrls: ['./heroes-list.component.scss']
 })
 export class HeroesListComponent implements OnInit, OnDestroy {
-  displayedColumns = ['nameLabel', 'genderLabel', 'citizenshipLabel', 'skillsLabel', 'occupationLabel', 'memberOfLabel', 'update', 'delete'];
+
+  displayedColumns = ['nameLabel','genderLabel','citizenshipLabel','skillsLabel','occupationLabel','memberOfLabel','update', 'delete'];
+  labelColumns = ['Name','Gender','Citizenship','Skills','Occupation','Member'];
+
   public dataSource = new MatTableDataSource<Hero>();
-  @ViewChild(MatSort) sort!: MatSort;
   selectedHero!: Hero;
+  allHeroNames: string[] = [];
+  chartData!: ChartData;
+
   subscriptions: Subscription[] = [];
-  allItems: string[] = [];
 
   constructor(
-    private heroesService: HeroesService,
-    private modalService: ModalService
+    private heroService: HeroService,
+    private modalService: ModalService,
+    private chartService: ChartService
   ) {
   }
 
@@ -30,14 +37,11 @@ export class HeroesListComponent implements OnInit, OnDestroy {
     this.getAllHeroes();
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-  }
-
   getAllHeroes() {
-    this.subscriptions.push(this.heroesService.getHeroes().subscribe(data => {
+    this.subscriptions.push(this.heroService.getHeroes().subscribe(data => {
       this.dataSource.data = data;
-      this.allItems = data.map(elem => elem.nameLabel);
+      this.allHeroNames = data.map(elem => elem.nameLabel);
+      this.chartData = this.chartService.getChartData(this.dataSource.data);
     }));
   }
 
@@ -55,33 +59,34 @@ export class HeroesListComponent implements OnInit, OnDestroy {
   }
 
   onFilterList(name: string) {
-    const filteredtems = this.heroesService.filter(name);
+    const filteredtems = this.heroService.filter(name);
     this.dataSource.data = filteredtems;
   }
 
   onRemoveItem(name: string) {
-    const filteredtems = this.heroesService.remove(name);
+    const filteredtems = this.heroService.remove(name);
     this.dataSource.data = filteredtems;
   }
 
   onAddHero() {
     const dialogRef = this.modalService.openDialog(HeroAddComponent,
-    {
-      height: '400px',
-      width: '600px',
-    });
+      {
+        height: '400px',
+        width: '600px',
+      });
 
     this.subscriptions.push(dialogRef.afterClosed().subscribe(returnedData => {
-      this.heroesService.add(returnedData);
+      if (returnedData)
+        this.heroService.add(returnedData);
     }));
   }
 
   onDelete($event: any) {
-
+    console.log("deleting")
   }
 
   onUpdate($event: any) {
-
+    console.log("updating")
   }
 
   ngOnDestroy(): void {

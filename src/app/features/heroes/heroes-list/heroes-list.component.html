@@ -1,10 +1,12 @@
 
 <section fxLayout="row" fxLayoutAlign="space-between center">
   <app-chip-autocomplete
-    [allItems]="allItems"
+    [title]="'Filter Heroes'"
+    [placeholder]="'Write hero name'"
+    [allItems]="allHeroNames"
     (onFilter)="onFilterList($event)"
     (onRemove)="onRemoveItem($event)"
-    *ngIf="allItems && allItems.length > 0">
+    *ngIf="allHeroNames && allHeroNames.length > 0">
   </app-chip-autocomplete>
   <div class="actions">
     <button class="mat-raised-button"(click)="onAddHero()">Create Hero</button>
@@ -12,78 +14,15 @@
 </section>
 
 <mat-card class="component-card">
-  <h4>List of Heroes</h4>
-    <table mat-table [dataSource]="dataSource" matSort matSortStart="desc">
-      <ng-container matColumnDef="nameLabel">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-        <mat-cell *matCellDef="let hero">{{ hero.nameLabel }}</mat-cell>
-      </ng-container>
+  <app-hero-table
+    [title]="'Heroes'"
+    [dataSource]="dataSource"
+    [chartData]="chartData"
+    (delete)="onDelete($event)"
+    (update)="onUpdate($event)"
+    (select)="onSelect($event)"
+  >
+  </app-hero-table>
+</mat-card>
 
-      <ng-container matColumnDef="genderLabel">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Gender</mat-header-cell>
-        <mat-cell class="description-cell" *matCellDef="let hero">{{
-          hero.genderLabel | titlecase
-        }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="citizenshipLabel">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Citizenship</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let hero">{{
-          hero.citizenshipLabel
-        }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="skillsLabel">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Skills</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let hero">{{
-          hero.skillsLabel | titlecase
-        }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="occupationLabel">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Occupation</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let hero">{{
-          hero.occupationLabel | titlecase
-        }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="memberOfLabel">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Member</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let hero">{{
-          hero.memberOfLabel
-        }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="creatorLabel">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Creator</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let hero">{{
-          hero.creatorLabel
-        }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="update">
-        <mat-header-cell *matHeaderCellDef>Update</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let hero">
-          <button mat-icon-button color="accent" (click)="onUpdate(hero)">
-            <mat-icon class="mat-18">system_update</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="delete">
-        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
-        <mat-cell class="duration-cell" *matCellDef="let hero">
-          <button mat-icon-button color="warn" (click)="onDelete(hero)">
-            <mat-icon class="mat-18">delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        (click)="onSelect(row)"
-      ></mat-row>
-    </table>
-  </mat-card>
 
