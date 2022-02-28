@@ -5,9 +5,7 @@ import { HeroesRoutingModule } from './heroes-routing.module';
 import { HeroesComponent } from './heroes.component';
 import { SharedModule } from '../../shared/shared.module';
 import { HeroesListComponent } from './heroes-list/heroes-list.component';
-import { HeroAddComponent } from './hero-add/hero-add.component';
-import { BarComponent } from './components/bar/bar.component';
-import { PieComponent } from './components/pie/pie.component';
+import { HeroAddEditComponent } from './hero-add-edit/hero-add-edit.component';
 import { HeroTableComponent } from './components/hero-table/hero-table.component';
 
 
@@ -15,9 +13,7 @@ import { HeroTableComponent } from './components/hero-table/hero-table.component
   declarations: [
     HeroesComponent,
     HeroesListComponent,
-    HeroAddComponent,
-    BarComponent,
-    PieComponent,
+    HeroAddEditComponent,
     HeroTableComponent
   ],
   imports: [
