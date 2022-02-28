@@ -1,13 +1,12 @@
-<h2 mat-dialog-title>Create new Hero</h2>
+<h2 mat-dialog-title>{{ data ? 'Update' : 'Create' }} new Hero</h2>
 
 <mat-dialog-content [formGroup]="form" fxLayout="column" fxLayoutGap="20px">
 
     <mat-form-field>
-        <input matInput placeholder="Name" formControlName="nameLabel">
+        <input matInput placeholder="Name" formControlName="nameLabel" [readonly]="mode === 'edit'">
         <mat-error *ngIf="form.controls['nameLabel'].touched && form.controls['nameLabel'].errors &&
            form.controls['nameLabel'].errors['required']">Required Field</mat-error>
     </mat-form-field>
-
 
     <mat-form-field appearance="fill">
       <mat-label>Choose the gender</mat-label>
@@ -51,6 +50,6 @@
 </mat-dialog-content>
 
 <mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between">
-    <button class="mat-raised-button"(click)="onCreate()">Create</button>
+    <button class="mat-raised-button"(click)="onCreateOrUpdate()">{{ mode === 'add' ? 'Create' : 'Update' }}</button>
     <button class="mat-raised-button"(click)="onClose()">Close</button>
 </mat-dialog-actions>
