@@ -3,7 +3,7 @@
 <mat-paginator #paginator [length]="totalItems" [pageIndex]="currentPage" [pageSize]="pageSize"
   [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)" aria-label="Select page"></mat-paginator>
 
-<div class="table-wrapper">
+<div class="mat-elevation-z8 table-wrapper">
   <mat-table [dataSource]="dataSource" matSort matSortStart="desc">
     <ng-container matColumnDef="{{column}}"
       *ngFor="let column of displayedColumns | slice:0:displayedColumns.length - 2;let i = index">
