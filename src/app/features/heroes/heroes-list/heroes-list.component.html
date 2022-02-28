@@ -9,7 +9,7 @@
     *ngIf="allHeroNames && allHeroNames.length > 0">
   </app-chip-autocomplete>
   <div class="actions">
-    <button class="mat-raised-button"(click)="onAddHero()">Create Hero</button>
+    <button class="mat-raised-button"(click)="onAddEditHero()">Create Hero</button>
   </div>
 </section>
 
@@ -19,7 +19,7 @@
     [dataSource]="dataSource"
     [chartData]="chartData"
     (delete)="onDelete($event)"
-    (update)="onUpdate($event)"
+    (update)="onAddEditHero($event)"
     (select)="onSelect($event)"
   >
   </app-hero-table>
