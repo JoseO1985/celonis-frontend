@@ -14,7 +14,8 @@ export class ChipAutocompleteComponent implements OnInit {
   itemCtrl = new FormControl();
   filteredItems: Observable<string[]> = of([]);
   items: string[] = [];
-
+  @Input() title!: string;
+  @Input() placeholder!: string;
   @Input() allItems: string[] = [];
   @Output() onFilter: EventEmitter<string> = new EventEmitter();
   @Output() onRemove: EventEmitter<string> = new EventEmitter();
